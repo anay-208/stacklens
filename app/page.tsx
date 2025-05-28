@@ -1,7 +1,7 @@
 "use client"
 
-import Home from "../src/app/page"
+import { FrameworkSelect } from "../src/components/framework-select"
 
 export default function SyntheticV0PageForDeployment() {
-  return <Home />
+  return <FrameworkSelect />
 }
