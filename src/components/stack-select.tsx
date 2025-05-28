@@ -1,44 +1,86 @@
 "use client"
 
-import { Check, ChevronsUpDown, Search } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useState } from "react"
 
-export interface StackOption {
+import { cn } from "@/src/lib/utils"
+import { Button } from "@/src/components/ui/button"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/src/components/ui/command"
+import { Popover, PopoverContent, PopoverTrigger } from "@/src/components/ui/popover"
+import { Check, ChevronsUpDown } from "lucide-react"
+
+type Framework = {
   value: string
   label: string
 }
 
+const frameworks: Framework[] = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+]
+
 interface StackSelectProps {
-  options: StackOption[]
-  value: string
-  onValueChange: (value: string) => void
-  placeholder?: string
+  className?: string
 }
 
-export function StackSelect({ options, value, onValueChange, placeholder = "Select option" }: StackSelectProps) {
-  const selectedOption = options.find((option) => option.value === value)
+export function StackSelect({ className }: StackSelectProps) {
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState("")
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" className="w-full justify-between">
-          {selectedOption ? selectedOption.label : placeholder}
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className={cn("w-[200px] justify-between", value ? "text-foreground" : "text-muted-foreground", className)}
+        >
+          {value ? frameworks.find((framework) => framework.value === value)?.label : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0">
+      <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search options..." className="h-9" icon={Search} />
+          <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No option found.</CommandEmpty>
-            <CommandGroup className="max-h-[300px] overflow-auto">
-              {options.map((option) => (
-                <CommandItem key={option.value} value={option.value} onSelect={() => onValueChange(option.value)}>
-                  {option.label}
-                  <Check className={cn("ml-auto h-4 w-4", value === option.value ? "opacity-100" : "opacity-0")} />
+            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandGroup>
+              {frameworks.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? "" : currentValue)
+                    setOpen(false)
+                  }}
+                >
+                  <Check className={cn("mr-2 h-4 w-4", value === framework.value ? "opacity-100" : "opacity-0")} />
+                  {framework.label}
                 </CommandItem>
               ))}
             </CommandGroup>
