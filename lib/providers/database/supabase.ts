@@ -1,25 +1,25 @@
-export interface DatabaseProvider {
-  name: string
-  baseCost: number
-  tiers: {
-    name: string
-    cost: number
-    description: string
-  }[]
-}
+import type { DatabaseProvider } from "@/lib/types/providers"
 
 export const supabase: DatabaseProvider = {
   name: "Supabase",
-  baseCost: 25,
+  value: "supabase",
+  category: "database",
+}
+
+// Internal pricing configuration - not exported
+const pricingConfig = {
   tiers: [
-    { name: "Free", cost: 0, description: "Up to 500MB database" },
-    { name: "Pro", cost: 25, description: "8GB database" },
-    { name: "Team", cost: 599, description: "Unlimited database" },
+    { maxUsers: 1000, cost: 0 },
+    { maxUsers: 100000, cost: 25 },
+    { maxUsers: Number.POSITIVE_INFINITY, cost: 599 },
   ],
 }
 
 export function calculateSupabaseCost(users: number): number {
-  if (users <= 1000) return 0
-  if (users <= 100000) return 25
-  return 599
+  for (const tier of pricingConfig.tiers) {
+    if (users <= tier.maxUsers) {
+      return tier.cost
+    }
+  }
+  return pricingConfig.tiers[pricingConfig.tiers.length - 1].cost
 }

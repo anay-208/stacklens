@@ -1,8 +1,8 @@
 import type { DatabaseProvider } from "@/lib/types/providers"
 
-export const postgresql: DatabaseProvider = {
-  name: "PostgreSQL",
-  value: "postgresql",
+export const mysql: DatabaseProvider = {
+  name: "MySQL",
+  value: "mysql",
   category: "database",
 }
 
@@ -15,7 +15,7 @@ const pricingConfig = {
   ],
 }
 
-export function calculatePostgreSQLCost(users: number): number {
+export function calculateMySQLCost(users: number): number {
   for (const tier of pricingConfig.tiers) {
     if (users <= tier.maxUsers) {
       return tier.cost

@@ -1,21 +1,20 @@
 import type { DatabaseProvider } from "@/lib/types/providers"
 
-export const postgresql: DatabaseProvider = {
-  name: "PostgreSQL",
-  value: "postgresql",
+export const redis: DatabaseProvider = {
+  name: "Redis",
+  value: "redis",
   category: "database",
 }
 
 // Internal pricing configuration - not exported
 const pricingConfig = {
   tiers: [
-    { maxUsers: 1000, cost: 15 },
-    { maxUsers: 10000, cost: 50 },
-    { maxUsers: Number.POSITIVE_INFINITY, cost: 150 },
+    { maxUsers: 1000, cost: 5 },
+    { maxUsers: Number.POSITIVE_INFINITY, cost: 15 },
   ],
 }
 
-export function calculatePostgreSQLCost(users: number): number {
+export function calculateRedisCost(users: number): number {
   for (const tier of pricingConfig.tiers) {
     if (users <= tier.maxUsers) {
       return tier.cost

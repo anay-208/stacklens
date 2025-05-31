@@ -1,27 +1,26 @@
-export interface DatabaseProvider {
-  name: string
-  baseCost: number
-  tiers: {
-    name: string
-    cost: number
-    description: string
-  }[]
-}
+import type { DatabaseProvider } from "@/lib/types/providers"
 
 export const mongodb: DatabaseProvider = {
   name: "MongoDB",
-  baseCost: 9,
+  value: "mongodb",
+  category: "database",
+}
+
+// Internal pricing configuration - not exported
+const pricingConfig = {
   tiers: [
-    { name: "M0 (Free)", cost: 0, description: "512 MB storage" },
-    { name: "M2", cost: 9, description: "2 GB storage" },
-    { name: "M5", cost: 25, description: "5 GB storage" },
-    { name: "M10", cost: 57, description: "10 GB storage" },
+    { maxUsers: 1000, cost: 9 },
+    { maxUsers: 10000, cost: 25 },
+    { maxUsers: 100000, cost: 57 },
+    { maxUsers: Number.POSITIVE_INFINITY, cost: 150 },
   ],
 }
 
 export function calculateMongoDBCost(users: number): number {
-  if (users <= 1000) return 9
-  if (users <= 10000) return 25
-  if (users <= 100000) return 57
-  return 150
+  for (const tier of pricingConfig.tiers) {
+    if (users <= tier.maxUsers) {
+      return tier.cost
+    }
+  }
+  return pricingConfig.tiers[pricingConfig.tiers.length - 1].cost
 }

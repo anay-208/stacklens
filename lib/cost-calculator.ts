@@ -9,9 +9,20 @@ import { calculateOktaCost } from "./providers/authentication/okta"
 import { calculatePostgreSQLCost } from "./providers/database/postgresql"
 import { calculateMongoDBCost } from "./providers/database/mongodb"
 import { calculateSupabaseCost } from "./providers/database/supabase"
+import { calculatePlanetScaleCost } from "./providers/database/planetscale"
+import { calculateFirebaseCost } from "./providers/database/firebase"
+import { calculateDynamoDBCost } from "./providers/database/dynamodb"
+import { calculateMySQLCost } from "./providers/database/mysql"
+import { calculateRedisCost } from "./providers/database/redis"
 
 import { calculateVercelCost } from "./providers/hosting/vercel"
 import { calculateNetlifyCost } from "./providers/hosting/netlify"
+import { calculateAWSCost } from "./providers/hosting/aws"
+import { calculateRailwayCost } from "./providers/hosting/railway"
+import { calculateRenderCost } from "./providers/hosting/render"
+import { calculateGCPCost } from "./providers/hosting/gcp"
+import { calculateAzureCost } from "./providers/hosting/azure"
+import { calculateDigitalOceanCost } from "./providers/hosting/digitalocean"
 
 export interface CostEstimate {
   service: string
@@ -41,22 +52,22 @@ const databaseCalculators: Record<string, (users: number) => number> = {
   postgresql: calculatePostgreSQLCost,
   mongodb: calculateMongoDBCost,
   supabase: calculateSupabaseCost,
-  planetscale: (users: number) => (users <= 1000 ? 0 : 29),
-  firebase: () => 0,
-  dynamodb: () => 0,
-  mysql: calculatePostgreSQLCost,
-  redis: (users: number) => (users <= 1000 ? 5 : 15),
+  planetscale: calculatePlanetScaleCost,
+  firebase: calculateFirebaseCost,
+  dynamodb: calculateDynamoDBCost,
+  mysql: calculateMySQLCost,
+  redis: calculateRedisCost,
 }
 
 const hostingCalculators: Record<string, (users: number) => number> = {
   vercel: calculateVercelCost,
   netlify: calculateNetlifyCost,
-  aws: (users: number) => (users <= 1000 ? 0 : 50),
-  railway: (users: number) => (users <= 1000 ? 5 : 20),
-  render: (users: number) => (users <= 1000 ? 7 : 25),
-  gcp: (users: number) => (users <= 1000 ? 0 : 30),
-  azure: (users: number) => (users <= 1000 ? 0 : 13),
-  digitalocean: (users: number) => 5,
+  aws: calculateAWSCost,
+  railway: calculateRailwayCost,
+  render: calculateRenderCost,
+  gcp: calculateGCPCost,
+  azure: calculateAzureCost,
+  digitalocean: calculateDigitalOceanCost,
 }
 
 const serviceLabels: Record<string, string> = {

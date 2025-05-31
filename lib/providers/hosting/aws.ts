@@ -1,8 +1,8 @@
 import type { HostingProvider } from "@/lib/types/providers"
 
-export const vercel: HostingProvider = {
-  name: "Vercel",
-  value: "vercel",
+export const aws: HostingProvider = {
+  name: "AWS",
+  value: "aws",
   category: "hosting",
 }
 
@@ -10,12 +10,11 @@ export const vercel: HostingProvider = {
 const pricingConfig = {
   tiers: [
     { maxUsers: 1000, cost: 0 },
-    { maxUsers: 100000, cost: 20 },
-    { maxUsers: Number.POSITIVE_INFINITY, cost: 150 },
+    { maxUsers: Number.POSITIVE_INFINITY, cost: 50 },
   ],
 }
 
-export function calculateVercelCost(users: number): number {
+export function calculateAWSCost(users: number): number {
   for (const tier of pricingConfig.tiers) {
     if (users <= tier.maxUsers) {
       return tier.cost

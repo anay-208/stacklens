@@ -1,18 +1,13 @@
-export interface AuthProvider {
-  name: string
-  baseCost: number
-  perUserCost?: number
-  freeTier: number
-  tiers: {
-    name: string
-    maxUsers: number
-    cost: number
-  }[]
-}
+import type { AuthProvider } from "@/lib/types/providers"
 
 export const auth0: AuthProvider = {
   name: "Auth0",
-  baseCost: 23,
+  value: "auth0",
+  category: "authentication",
+}
+
+// Internal pricing configuration - not exported
+const pricingConfig = {
   freeTier: 7000,
   tiers: [
     { name: "Free", maxUsers: 7000, cost: 0 },
@@ -23,10 +18,10 @@ export const auth0: AuthProvider = {
 }
 
 export function calculateAuth0Cost(users: number): number {
-  if (users <= auth0.freeTier) return 0
+  if (users <= pricingConfig.freeTier) return 0
 
   // Essential tier pricing
-  if (users <= 1000) return auth0.baseCost
+  if (users <= 1000) return 23
 
   // Professional tier for higher usage
   if (users <= 10000) return 130

@@ -1,23 +1,16 @@
-export interface AuthProvider {
-  name: string
-  baseCost: number
-  perUserCost?: number
-  freeTier: number
-  tiers: {
-    name: string
-    maxUsers: number
-    cost: number
-  }[]
-}
+import type { AuthProvider } from "@/lib/types/providers"
 
 export const okta: AuthProvider = {
   name: "Okta",
-  baseCost: 0,
+  value: "okta",
+  category: "authentication",
+}
+
+// Internal pricing configuration - not exported
+const pricingConfig = {
   perUserCost: 2,
-  freeTier: 0,
-  tiers: [{ name: "Workforce Identity", maxUsers: Number.POSITIVE_INFINITY, cost: 2 }],
 }
 
 export function calculateOktaCost(users: number): number {
-  return users * (okta.perUserCost || 0)
+  return users * pricingConfig.perUserCost
 }

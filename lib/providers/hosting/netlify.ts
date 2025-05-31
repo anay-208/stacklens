@@ -1,25 +1,25 @@
-export interface HostingProvider {
-  name: string
-  baseCost: number
-  tiers: {
-    name: string
-    cost: number
-    description: string
-  }[]
-}
+import type { HostingProvider } from "@/lib/types/providers"
 
 export const netlify: HostingProvider = {
   name: "Netlify",
-  baseCost: 19,
+  value: "netlify",
+  category: "hosting",
+}
+
+// Internal pricing configuration - not exported
+const pricingConfig = {
   tiers: [
-    { name: "Starter", cost: 0, description: "Personal projects" },
-    { name: "Pro", cost: 19, description: "Professional projects" },
-    { name: "Business", cost: 99, description: "Team projects" },
+    { maxUsers: 1000, cost: 0 },
+    { maxUsers: 100000, cost: 19 },
+    { maxUsers: Number.POSITIVE_INFINITY, cost: 99 },
   ],
 }
 
 export function calculateNetlifyCost(users: number): number {
-  if (users <= 1000) return 0
-  if (users <= 100000) return 19
-  return 99
+  for (const tier of pricingConfig.tiers) {
+    if (users <= tier.maxUsers) {
+      return tier.cost
+    }
+  }
+  return pricingConfig.tiers[pricingConfig.tiers.length - 1].cost
 }
