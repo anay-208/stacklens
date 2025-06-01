@@ -10,7 +10,8 @@ export const authOptions: StackOption[] = [
   { value: "clerk", label: "Clerk" },
   { value: "firebase-auth", label: "Firebase Auth" },
   { value: "cognito", label: "AWS Cognito" },
-  { value: "okta", label: "Okta" },
+  { value: "workos", label: "WorkOS" },
+  { value: "better-auth", label: "Better Auth" },
 ]
 
 export const databaseOptions: StackOption[] = [

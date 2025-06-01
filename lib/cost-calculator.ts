@@ -1,10 +1,11 @@
 import { calculateAuth0Cost } from "./providers/authentication/auth0"
 import { calculateClerkCost } from "./providers/authentication/clerk"
 import { calculateSupabaseAuthCost } from "./providers/authentication/supabase-auth"
-import { calculateNextAuthCost } from "./providers/authentication/nextauth"
+import { calculateBetterAuthCost } from "./providers/authentication/better-auth"
 import { calculateFirebaseAuthCost } from "./providers/authentication/firebase-auth"
 import { calculateCognitoCost } from "./providers/authentication/cognito"
-import { calculateOktaCost } from "./providers/authentication/okta"
+import { calculateNextAuthCost } from "./providers/authentication/nextauth"
+import { calculateWorkOSCost } from "./providers/authentication/workos"
 
 import { calculatePostgreSQLCost } from "./providers/database/postgresql"
 import { calculateMongoDBCost } from "./providers/database/mongodb"
@@ -45,7 +46,8 @@ const authCalculators: Record<string, (users: number) => number> = {
   nextauth: calculateNextAuthCost,
   "firebase-auth": calculateFirebaseAuthCost,
   cognito: calculateCognitoCost,
-  okta: calculateOktaCost,
+  "better-auth": calculateBetterAuthCost,
+  workos: calculateWorkOSCost,
 }
 
 const databaseCalculators: Record<string, (users: number) => number> = {
@@ -88,8 +90,8 @@ const serviceLabels: Record<string, string> = {
   nextauth: "NextAuth.js",
   "firebase-auth": "Firebase Auth",
   cognito: "AWS Cognito",
-  okta: "Okta",
-
+  "better-auth": "Better Auth",
+  workos: "WorkOS",
   // Database
   postgresql: "PostgreSQL",
   mongodb: "MongoDB",
