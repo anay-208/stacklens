@@ -8,11 +8,11 @@ export const mongodb: DatabaseProvider = {
 
 // Internal pricing configuration - not exported
 const pricingConfig = {
-  tiers: [
-    { maxUsers: 1000, cost: 9 },
-    { maxUsers: 10000, cost: 25 },
-    { maxUsers: 100000, cost: 57 },
-    { maxUsers: Number.POSITIVE_INFINITY, cost: 150 },
+  tiers: [ // As always, it is a rough estimate, and estimated by GPT based on usage
+    { maxUsers: 100_000, cost: 57 },
+    { maxUsers: 200_000, cost: 144 },
+    { maxUsers: 400_000, cost: 389 },
+    { maxUsers: 1_000_000, cost: 749 }
   ],
 }
 

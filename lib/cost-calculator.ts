@@ -11,7 +11,7 @@ import { calculatePostgreSQLCost } from "./providers/database/postgresql"
 import { calculateMongoDBCost } from "./providers/database/mongodb"
 import { calculateSupabaseCost } from "./providers/database/supabase"
 import { calculatePlanetScaleCost } from "./providers/database/planetscale"
-import { calculateFirebaseCost } from "./providers/database/firebase"
+import { calculateFirestoreCost } from "./providers/database/firebase"
 import { calculateDynamoDBCost } from "./providers/database/dynamodb"
 import { calculateMySQLCost } from "./providers/database/mysql"
 import { calculateRedisCost } from "./providers/database/redis"
@@ -55,7 +55,7 @@ const databaseCalculators: Record<string, (users: number) => number> = {
   mongodb: calculateMongoDBCost,
   supabase: calculateSupabaseCost,
   planetscale: calculatePlanetScaleCost,
-  firebase: calculateFirebaseCost,
+  firestore: calculateFirestoreCost,
   dynamodb: calculateDynamoDBCost,
   mysql: calculateMySQLCost,
   redis: calculateRedisCost,
@@ -87,9 +87,9 @@ const serviceLabels: Record<string, string> = {
   auth0: "Auth0",
   clerk: "Clerk",
   "supabase-auth": "Supabase Auth",
-  nextauth: "NextAuth.js",
   "firebase-auth": "Firebase Auth",
-  cognito: "AWS Cognito",
+  cognito: "AWS Cognito",  
+  nextauth: "NextAuth.js",
   "better-auth": "Better Auth",
   workos: "WorkOS",
   // Database

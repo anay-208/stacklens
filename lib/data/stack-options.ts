@@ -19,7 +19,7 @@ export const databaseOptions: StackOption[] = [
   { value: "mongodb", label: "MongoDB" },
   { value: "supabase", label: "Supabase" },
   { value: "planetscale", label: "PlanetScale" },
-  { value: "firebase", label: "Firebase" },
+  { value: "firestore", label: "Firestore" },
   { value: "dynamodb", label: "AWS DynamoDB" },
   { value: "mysql", label: "MySQL" },
   { value: "redis", label: "Redis" },
