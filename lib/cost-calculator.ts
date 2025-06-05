@@ -13,7 +13,6 @@ import { calculateSupabaseCost } from "./providers/database/supabase"
 import { calculatePlanetScaleCost } from "./providers/database/planetscale"
 import { calculateFirestoreCost } from "./providers/database/firebase"
 import { calculateDynamoDBCost } from "./providers/database/dynamodb"
-import { calculateMySQLCost } from "./providers/database/mysql"
 import { calculateRedisCost } from "./providers/database/redis"
 
 import { calculateVercelCost } from "./providers/hosting/vercel"
@@ -57,7 +56,6 @@ const databaseCalculators: Record<string, (users: number) => number> = {
   planetscale: calculatePlanetScaleCost,
   firestore: calculateFirestoreCost,
   dynamodb: calculateDynamoDBCost,
-  mysql: calculateMySQLCost,
   redis: calculateRedisCost,
 }
 
