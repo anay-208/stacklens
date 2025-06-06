@@ -13,9 +13,9 @@ const pricingConfig = {
     pro: {
       cost: 25,
       includedUsers: 100_000,
-      mau: 0.00325
-    }
-  }
+      mau: 0.00325,
+    },
+  },
 }
 
 export function calculateSupabaseAuthCost(users: number): number {

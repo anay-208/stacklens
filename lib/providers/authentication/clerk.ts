@@ -10,7 +10,7 @@ export const clerk: AuthProvider = {
 const pricingConfig = {
   freeTier: 10000,
   baseCost: 25,
-  mau: 0.02
+  mau: 0.02,
 }
 
 export function calculateClerkCost(users: number): number {

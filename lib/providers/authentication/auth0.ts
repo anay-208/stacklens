@@ -10,8 +10,8 @@ export const auth0: AuthProvider = {
 const pricingConfig = {
   freeTier: 25_000,
   beyond: {
-    cost: 3000 // Assumption, because contacting sales will be needed
-  }
+    cost: 3000, // Assumption, because contacting sales will be needed
+  },
 }
 
 export function calculateAuth0Cost(users: number): number {

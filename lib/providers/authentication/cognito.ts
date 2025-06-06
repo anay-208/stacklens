@@ -9,7 +9,7 @@ export const cognito: AuthProvider = {
 // Internal pricing configuration - not exported
 const pricingConfig = {
   // assuming Essentials plan is used
-  freeTier: 10_000, 
+  freeTier: 10_000,
   perUserCost: 0.015,
 }
 

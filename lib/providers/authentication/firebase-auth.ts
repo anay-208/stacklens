@@ -10,7 +10,7 @@ export const firebaseAuth: AuthProvider = {
 const pricingConfig = {
   freeTier: 50_000,
   mau1: 0.0055,
-  mau2: 0.0045
+  mau2: 0.0045,
 }
 
 export function calculateFirebaseAuthCost(users: number): number {
