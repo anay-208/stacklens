@@ -1,24 +1,31 @@
 import type { DatabaseProvider } from "@/lib/types/providers"
+import { config } from "./config"
 
 export const redis: DatabaseProvider = {
-  name: "Redis",
+  name: "Upstash Redis",
   value: "redis",
   category: "database",
 }
 
-// Internal pricing configuration - not exported
 const pricingConfig = {
-  tiers: [
-    { maxUsers: 1000, cost: 5 },
-    { maxUsers: Number.POSITIVE_INFINITY, cost: 15 },
-  ],
+  storage: {
+    free: 0.256, // GB (256 MB free tier)
+  },
+
+  freeCommands: 500_000,
+  commandCost: 0.20 / 100_000, // $0.20 per 100K commands
+  storageLimit: 100, // GB (limit of Pay-as-you-go)
 }
 
 export function calculateRedisCost(users: number): number {
-  for (const tier of pricingConfig.tiers) {
-    if (users <= tier.maxUsers) {
-      return tier.cost
-    }
+
+  const totalCommands =
+    users * (config.operations.reads + config.operations.writes)
+  if (totalCommands <= pricingConfig.freeCommands) {
+    return 0
   }
-  return pricingConfig.tiers[pricingConfig.tiers.length - 1].cost
+
+
+  return totalCommands * pricingConfig.commandCost
+
 }

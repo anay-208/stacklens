@@ -1,6 +1,6 @@
 import { authCalculators, authProviders } from "./providers/authentication"
 import { databaseCalculators, databaseProviders } from "./providers/database"
-import { frameworkCalculators, frameworkProviders } from "./providers/frameworks"
+import {  frameworkProviders } from "./providers/frameworks"
 import { hostingCalculators, hostingProviders } from "./providers/hosting"
 
 export interface CostEstimate {
@@ -10,10 +10,10 @@ export interface CostEstimate {
 }
 
 export interface StackSelection {
-  framework: string
-  auth: string
+  framework: string 
+  auth: string 
   database: string
-  hosting: string
+  hosting: string 
   users: number
 }
 
@@ -41,8 +41,7 @@ export function calculateStackCost(stack: StackSelection): CostEstimate[] {
 
   // Framework cost (always free)
   if (stack.framework) {
-    const calculator = frameworkCalculators[stack.framework]
-    const cost = calculator ? calculator(stack.users) : 0
+    const cost = 0
 
     estimates.push({
       service: getServiceLabel(stack.framework),
@@ -53,7 +52,7 @@ export function calculateStackCost(stack: StackSelection): CostEstimate[] {
 
   // Authentication cost
   if (stack.auth) {
-    const calculator = authCalculators[stack.auth]
+    const calculator = authCalculators[stack.auth as keyof typeof authCalculators]
     const cost = calculator ? calculator(stack.users) : 0
 
     estimates.push({
@@ -65,7 +64,8 @@ export function calculateStackCost(stack: StackSelection): CostEstimate[] {
 
   // Database cost
   if (stack.database) {
-    const calculator = databaseCalculators[stack.database]
+    const calculator = databaseCalculators[stack.database as keyof typeof databaseCalculators]
+    console.log(databaseCalculators, stack.database)
     const cost = calculator ? calculator(stack.users) : 0
 
     estimates.push({
@@ -77,7 +77,7 @@ export function calculateStackCost(stack: StackSelection): CostEstimate[] {
 
   // Hosting cost
   if (stack.hosting) {
-    const calculator = hostingCalculators[stack.hosting]
+    const calculator = hostingCalculators[stack.hosting as keyof typeof hostingCalculators]
     const cost = calculator ? calculator(stack.users) : 0
 
     estimates.push({
